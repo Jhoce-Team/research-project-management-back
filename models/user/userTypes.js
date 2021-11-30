@@ -32,11 +32,11 @@ const userTypes = gql`
 
     editUser(
       _id: String!
-      userName: String!
-      userLastName: String!
-      identification: String!
-      email: String!
-      rol: Enum_UserRol!
+      userName: String
+      userLastName: String
+      identification: String
+      email: String
+      rol: Enum_UserRol
       status: Enum_UserStatus
       country: String
       userDescription: String

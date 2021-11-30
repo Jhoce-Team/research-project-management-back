@@ -3,13 +3,43 @@ import { advanceModel } from "./advance.js";
 const advanceResolvers = {
   Query: {
     findAllAdvances: async (parent, args) => {
-      const advances = await advanceModel.find();
+      const advances = await advanceModel.find().populate([
+        {
+          path: "advanceProject",
+          populate: {
+            path: "leader",
+          },
+        },
+        {
+          path: "advanceAuthor",
+        },
+        {
+          path: "observations",
+          populate: {
+            path: "observationAuthor",
+          },
+        },
+      ]);
       return advances;
     },
     findOneAdvance: async (parent, args) => {
-      const advance = await advanceModel
-        .findOne({ _id: args._id })
-        .populate("project", "user");
+      const advance = await advanceModel.findById({ _id: args._id }).populate([
+        {
+          path: "advanceProject",
+          populate: {
+            path: "leader",
+          },
+        },
+        {
+          path: "observations",
+          populate: {
+            path: "observationAuthor",
+          },
+        },
+        {
+          path: "advanceAuthor",
+        },
+      ]);
       return advance;
     },
   },
@@ -19,7 +49,7 @@ const advanceResolvers = {
         advanceDate: args.advanceDate,
         advanceDescription: args.advanceDescription,
         observations: args.observations,
-        project: args.project,
+        advanceProject: args.advanceProject,
         advanceAuthor: args.advanceAuthor,
       });
       return advance;
@@ -29,7 +59,7 @@ const advanceResolvers = {
         advanceDate: args.advanceDate,
         advanceDescription: args.advanceDescription,
         observations: args.observations,
-        project: args.project,
+        advanceProject: args.advanceProject,
         advanceAuthor: args.advanceAuthor,
       });
       return advanceEdited;

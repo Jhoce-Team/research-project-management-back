@@ -7,7 +7,7 @@ const projectResolvers = {
       return projects;
     },
     findOneProject: async (parent, args) => {
-      const project = await projectModel.findOne({ _id: args._id });
+      const project = await projectModel.findOne({ _id: args._id }).populate("leader");
       return project;
     },
   },
@@ -22,7 +22,7 @@ const projectResolvers = {
         phase: args.phase,
         leader: args.leader,
         objectives: args.objectives,
-      });
+      })
       return projectCreated;
     },
     editProject: async (parent, args) => {

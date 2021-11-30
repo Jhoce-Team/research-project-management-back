@@ -26,7 +26,7 @@ const userResolvers = {
       return userCreated;
     },
     editUser: async (parent, args) => {
-      const userEdited = await userModel.findOneAndUpdate(args._id, {
+      const userEdited = await userModel.findByIdAndUpdate(args._id, {
         userName: args.userName,
         userLastName: args.userLastName,
         identification: args.identification,
@@ -36,19 +36,13 @@ const userResolvers = {
         country: args.country,
         userDescription: args.userDescription,
       });
+      return userEdited;
     },
     deleteUser: async (parent, args) => {
-      if (Object.keys(args).includes("_id")) {
-        const userDeleted = await userModel.findByIdAndDelete({
-          _id: args._id,
-        });
-        return userDeleted;
-      } else if (Object.keys(args).includes("email")) {
-        const userDeleted = await userModel.findOneAndDelete({
-          email: args.email,
-        });
-        return userDeleted;
-      }
+      const userDeleted = await userModel.findByIdAndDelete({
+        _id: args._id,
+      });
+      return userDeleted;
     },
   },
 };

@@ -3,11 +3,33 @@ import { inscriptionModel } from "./inscription.js";
 const inscriptionResolvers = {
   Query: {
     findAllInscriptions: async (parent, args) => {
-      const inscriptions = await inscriptionModel.find();
+      const inscriptions = await inscriptionModel.find().populate([
+        {
+          path: "enrollmentProject",
+          populate: {
+            path: "leader",
+          },
+        },
+        {
+          path: "enrollmentStudent",
+        },
+      ]);
       return inscriptions;
     },
     findOneInscription: async (parent, args) => {
-      const inscription = await inscriptionModel.findById({ _id: args._id });
+      const inscription = await inscriptionModel
+        .findById({ _id: args._id })
+        .populate([
+          {
+            path: "enrollmentProject",
+            populate: {
+              path: "leader",
+            },
+          },
+          {
+            path: "enrollmentStudent",
+          },
+        ]);
       return inscription;
     },
   },

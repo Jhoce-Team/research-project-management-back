@@ -1,19 +1,16 @@
 import { gql } from "apollo-server-express";
 
 const advanceTypes = gql`
-  type Observations {
-    _id: ID!
-    observationDate: Date!
-    observationDescription: String!
-    observationAuthor: User!
+  input createObservation {
+    observationReference: String!
   }
 
   type Advance {
     _id: ID!
     advanceDate: Date!
     advanceDescription: String!
-    observations: [Observations]
-    project: Project!
+    observations: [Observation]
+    advanceProject: Project!
     advanceAuthor: User!
   }
 
@@ -26,7 +23,8 @@ const advanceTypes = gql`
     createAdvance(
       advanceDate: Date!
       advanceDescription: String!
-      project: String!
+      observations: [String]
+      advanceProject: String!
       advanceAuthor: String!
     ): Advance
 
@@ -34,10 +32,12 @@ const advanceTypes = gql`
       _id: String!
       advanceDate: Date
       advanceDescription: String
-      project: String
+      observations: [String]
+      advanceProject: String
+      advanceAuthor: String
     ): Advance
 
-    deleteAdvance(_id: String): Advance
+    deleteAdvance(_id: String!): Advance
   }
 `;
 
