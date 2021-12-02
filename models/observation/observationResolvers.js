@@ -3,17 +3,27 @@ import { observationModel } from "./observation.js";
 const observationResolvers = {
   Query: {
     findAllObservations: async (parent, args) => {
-      const observations = await observationModel
-        .find()
-        .populate("observationAuthor")
-        .populate("observationAuthor");
+      const observations = await observationModel.find().populate([
+        {
+          path: "observationAuthor",
+        },
+        {
+          path: "advanceFather",
+        },
+      ]);
       return observations;
     },
     findOneObservation: async (parent, args) => {
       const observation = observationModel
         .findById({ _id: args._id })
-        .populate("observationAuthor")
-        .populate("observationAuthor");
+        .populate([
+          {
+            path: "observationAuthor",
+          },
+          {
+            path: "advanceFather",
+          },
+        ]);
       return observation;
     },
   },
@@ -33,7 +43,8 @@ const observationResolvers = {
           observationDate: args.observationDate,
           observationDescription: args.observationDescription,
           observationAuthor: args.observationAuthor,
-        }
+        },
+        { new: true }
       );
       return observationEdited;
     },

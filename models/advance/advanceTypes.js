@@ -17,6 +17,7 @@ const advanceTypes = gql`
   type Query {
     findAllAdvances: [Advance]
     findOneAdvance(_id: String!): Advance
+    filterAdvances(projectID: String!): [Advance]
   }
 
   type Mutation {

@@ -6,6 +6,7 @@ const observationTypes = gql`
     observationDate: Date!
     observationDescription: String!
     observationAuthor: User!
+    advanceFather: [Advance]
   }
 
   type Query {

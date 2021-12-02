@@ -3,11 +3,57 @@ import { projectModel } from "./project.js";
 const projectResolvers = {
   Query: {
     findAllProjects: async (parent, args) => {
-      const projects = await projectModel.find().populate("leader");
+      const projects = await projectModel.find().populate([
+        { path: "leader" },
+        {
+          path: "advances",
+          populate: {
+            path: "observations",
+            populate: {
+              path: "observationAuthor",
+            },
+          },
+        },
+        {
+          path: "advances",
+          populate: {
+            path: "advanceAuthor",
+          },
+        },
+        {
+          path: "inscriptions",
+          populate: {
+            path: "enrollmentStudent",
+          },
+        },
+      ]);
       return projects;
     },
     findOneProject: async (parent, args) => {
-      const project = await projectModel.findOne({ _id: args._id }).populate("leader");
+      const project = await projectModel.findOne({ _id: args._id }).populate([
+        { path: "leader" },
+        {
+          path: "advances",
+          populate: {
+            path: "observations",
+            populate: {
+              path: "observationAuthor",
+            },
+          },
+        },
+        {
+          path: "advances",
+          populate: {
+            path: "advanceAuthor",
+          },
+        },
+        {
+          path: "inscriptions",
+          populate: {
+            path: "enrollmentStudent",
+          },
+        },
+      ]);
       return project;
     },
   },
@@ -22,20 +68,24 @@ const projectResolvers = {
         phase: args.phase,
         leader: args.leader,
         objectives: args.objectives,
-      })
+      });
       return projectCreated;
     },
     editProject: async (parent, args) => {
-      const projectEdited = await projectModel.findByIdAndUpdate(args._id, {
-        projectName: args.projectName,
-        budget: args.budget,
-        startDate: args.startDate,
-        endDate: args.endDate,
-        status: args.status,
-        phase: args.phase,
-        leader: args.leader,
-        objectives: args.objectives,
-      });
+      const projectEdited = await projectModel.findByIdAndUpdate(
+        args._id,
+        {
+          projectName: args.projectName,
+          budget: args.budget,
+          startDate: args.startDate,
+          endDate: args.endDate,
+          status: args.status,
+          phase: args.phase,
+          leader: args.leader,
+          objectives: args.objectives,
+        },
+        { new: true }
+      );
       return projectEdited;
     },
     deleteProject: async (parent, args) => {

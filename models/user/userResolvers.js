@@ -3,11 +3,37 @@ import { userModel } from "./user.js";
 const userResolvers = {
   Query: {
     findAllUsers: async (parent, args) => {
-      const users = await userModel.find();
+      const users = await userModel.find().populate([
+        {
+          path: "projectsLed",
+        },
+        {
+          path: "inscriptedProjects",
+        },
+        {
+          path: "myAdvances",
+        },
+        {
+          path: "myObservations",
+        },
+      ]);
       return users;
     },
     findOneUser: async (parent, args) => {
-      const user = await userModel.findById({ _id: args._id });
+      const user = await userModel.findById({ _id: args._id }).populate([
+        {
+          path: "projectsLed",
+        },
+        {
+          path: "inscriptedProjects",
+        },
+        {
+          path: "myAdvances",
+        },
+        {
+          path: "myObservations",
+        },
+      ]);
       return user;
     },
   },
@@ -26,16 +52,20 @@ const userResolvers = {
       return userCreated;
     },
     editUser: async (parent, args) => {
-      const userEdited = await userModel.findByIdAndUpdate(args._id, {
-        userName: args.userName,
-        userLastName: args.userLastName,
-        identification: args.identification,
-        email: args.email,
-        rol: args.rol,
-        status: args.status,
-        country: args.country,
-        userDescription: args.userDescription,
-      });
+      const userEdited = await userModel.findByIdAndUpdate(
+        args._id,
+        {
+          userName: args.userName,
+          userLastName: args.userLastName,
+          identification: args.identification,
+          email: args.email,
+          rol: args.rol,
+          status: args.status,
+          country: args.country,
+          userDescription: args.userDescription,
+        },
+        { new: true }
+      );
       return userEdited;
     },
     deleteUser: async (parent, args) => {

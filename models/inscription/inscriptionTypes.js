@@ -34,6 +34,8 @@ const inscriptionTypes = gql`
     ): Inscription
 
     deleteInscription(_id: String!): Inscription
+
+    approveInscription(_id: String!): Inscription
   }
 `;
 

@@ -22,6 +22,8 @@ const projectTypes = gql`
     phase: Enum_ProjectPhase
     leader: User!
     objectives: [Objectives]
+    advances: [Advance]
+    inscriptions: [Inscription]
   }
 
   type Query {

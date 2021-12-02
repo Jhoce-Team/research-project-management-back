@@ -11,6 +11,10 @@ const userTypes = gql`
     status: Enum_UserStatus
     country: String
     userDescription: String
+    projectsLed: [Project]
+    inscriptedProjects: [Inscription]
+    myAdvances: [Advance]
+    myObservation: [Observation]
   }
 
   type Query {

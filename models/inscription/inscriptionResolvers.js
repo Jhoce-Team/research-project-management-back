@@ -53,7 +53,8 @@ const inscriptionResolvers = {
           egressDate: args.egressDate,
           enrollmentProject: args.enrollmentProject,
           enrollmentStudes: args.enrollementStudent,
-        }
+        },
+        { new: true }
       );
       return inscriptionEdited;
     },
@@ -62,6 +63,13 @@ const inscriptionResolvers = {
         _id: args._id,
       });
       return inscriptionDeleted;
+    },
+    approveInscription: async (parent, args) => {
+      const inscription = await inscriptionModel.findByIdAndUpdate(args._id, {
+        inscriptionStatus: "ACEPTADO",
+        admissionDate: Date.now(),
+      });
+      return inscription;
     },
   },
 };

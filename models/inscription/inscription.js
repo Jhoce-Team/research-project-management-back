@@ -11,7 +11,6 @@ const inscriptionSchema = new Schema({
   },
   admissionDate: {
     type: Date,
-    required: true,
   },
   egressDate: {
     type: Date,
