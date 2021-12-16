@@ -4,6 +4,7 @@ import { inscriptionTypes } from "../models/inscription/inscriptionTypes.js";
 import { projectTypes } from "../models/project/projectTypes.js";
 import { userTypes } from "../models/user/userTypes.js";
 import { observationTypes } from "../models/observation/observationTypes.js";
+import { ingressTypes } from "../models/ingress/ingressTypes.js";
 import { enums } from "../models/enums.js";
 
 const globalTypes = gql`
@@ -18,6 +19,7 @@ const typeDefs = [
   advanceTypes,
   inscriptionTypes,
   observationTypes,
+  ingressTypes,
 ];
 
 export { typeDefs };

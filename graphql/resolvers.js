@@ -3,6 +3,7 @@ import { inscriptionResolvers } from "../models/inscription/inscriptionResolvers
 import { projectResolvers } from "../models/project/projectResolvers.js";
 import { userResolvers } from "../models/user/userResolvers.js";
 import { observationResolvers } from "../models/observation/observationResolvers.js";
+import { ingressResolvers } from "../models/ingress/ingressResolvers.js";
 
 const resolvers = [
   userResolvers,
@@ -10,6 +11,7 @@ const resolvers = [
   advanceResolvers,
   inscriptionResolvers,
   observationResolvers,
+  ingressResolvers,
 ];
 
 export { resolvers };

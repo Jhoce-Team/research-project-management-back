@@ -27,6 +27,10 @@ const userSchema = new Schema(
         message: "The email format is wrong",
       },
     },
+    password: {
+      type: String,
+      required: true,
+    },
     rol: {
       type: String,
       required: true,

@@ -32,6 +32,7 @@ const userTypes = gql`
       status: Enum_UserStatus
       country: String
       userDescription: String
+      password: String!
     ): User
 
     editUser(
