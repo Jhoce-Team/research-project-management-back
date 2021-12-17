@@ -1,6 +1,11 @@
 import { gql } from "apollo-server-express";
 
 const ingressTypes = gql`
+  type Token {
+    token: String
+    error: String
+  }
+
   type Mutation {
     register(
       userName: String!
@@ -10,7 +15,7 @@ const ingressTypes = gql`
       rol: Enum_UserRol!
       country: String
       password: String!
-    ): String!
+    ): Token!
   }
 `;
 

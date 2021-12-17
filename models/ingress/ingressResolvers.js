@@ -1,5 +1,6 @@
 import { userModel } from "../user/user.js";
 import bcrypt from "bcrypt";
+import { generateToken } from "../../utils/tokenUtils.js";
 
 const ingressResolvers = {
   Mutation: {
@@ -15,8 +16,17 @@ const ingressResolvers = {
         rol: args.rol,
         password: hashedPassword,
       });
-      console.log("Created user", newUser);
-      return "Insertar el token a retornar";
+      return {
+        token: generateToken({
+          _id: newUser._id,
+          userName: newUser.userName,
+          userLastName: newUser.userLastName,
+          identification: newUser.identification,
+          email: newUser.email,
+          country: newUser.country,
+          rol: newUser.rol, 
+        }),
+      };
     },
   },
 };
