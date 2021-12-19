@@ -47,7 +47,23 @@ const ingressResolvers = {
     },
 
     validateToken: async (parent, args, context) => {
-      console.log(context);
+      if (!context.userData) {
+        return {
+          error: "Inavalid token",
+        };
+      } else {
+        return {
+          token: generateToken({
+            _id: context.userData._id,
+            userName: context.userData.userName,
+            userLastName: context.userData.userLastName,
+            identification: context.userData.identification,
+            email: context.userData.email,
+            country: context.userData.country,
+            rol: context.userData.rol,  
+          }),
+        };
+      }
     },
   },
 };
