@@ -16,6 +16,10 @@ const ingressTypes = gql`
       country: String
       password: String!
     ): Token!
+
+    login(email: String!, password: String!): Token
+
+    validateToken: Token
   }
 `;
 

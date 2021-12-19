@@ -24,9 +24,30 @@ const ingressResolvers = {
           identification: newUser.identification,
           email: newUser.email,
           country: newUser.country,
-          rol: newUser.rol, 
+          rol: newUser.rol,
         }),
       };
+    },
+
+    login: async (parent, args) => {
+      const user = await userModel.findOne({ email: args.email });
+      if (await bcrypt.compare(args.password, user.password)) {
+        return {
+          token: generateToken({
+            _id: user._id,
+            userName: user.userName,
+            userLastName: user.userLastName,
+            identification: user.identification,
+            email: user.email,
+            country: user.country,
+            rol: user.rol,
+          }),
+        };
+      }
+    },
+
+    validateToken: async (parent, args, context) => {
+      console.log(context);
     },
   },
 };
