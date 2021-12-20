@@ -2,22 +2,29 @@ import { userModel } from "./user.js";
 
 const userResolvers = {
   Query: {
-    findAllUsers: async (parent, args) => {
-      const users = await userModel.find().populate([
-        {
-          path: "projectsLed",
-        },
-        {
-          path: "inscriptedProjects",
-        },
-        {
-          path: "myAdvances",
-        },
-        {
-          path: "myObservations",
-        },
-      ]);
-      return users;
+    findAllUsers: async (parent, args, context) => {
+      if (context.userData.rol === "ADMINISTRADOR") {
+        const users = await userModel.find().populate([
+          {
+            path: "projectsLed",
+          },
+          {
+            path: "inscriptedProjects",
+          },
+          {
+            path: "myAdvances",
+          },
+          {
+            path: "myObservations",
+          },
+        ]);
+        return users;
+      } else if (context.userData.rol === "LIDER") {
+        const users = await userModel.find({ rol: "ESTUDIANTE" });
+        return users;
+      } else {
+        return null;
+      }
     },
     findOneUser: async (parent, args) => {
       const user = await userModel.findById({ _id: args._id }).populate([
