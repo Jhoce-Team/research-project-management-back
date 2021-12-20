@@ -7,9 +7,19 @@ const projectTypes = gql`
     objectiveType: String!
   }
 
-  input createObjective {
-    objectiveDescription: String!
-    objectiveType: Enum_ObjectiveType!
+  input objectiveFields {
+    objectiveDescription: String
+    objectiveType: Enum_ObjectiveType
+  }
+
+  input projectFields {
+    projectName: String
+    budget: Float
+    startDate: Date
+    endDate: Date
+    status: Enum_ProjectStatus
+    phase: Enum_ProjectPhase
+    leader: String
   }
 
   type Project {
@@ -40,24 +50,22 @@ const projectTypes = gql`
       status: Enum_ProjectStatus
       phase: Enum_ProjectPhase
       leader: ID!
-      objectives: [createObjective]
+      objectives: [objectiveFields]
     ): Project
 
-    editProject(
-      _id: String!
-      projectName: String
-      budget: Float
-      startDate: Date
-      endDate: Date
-      status: Enum_ProjectStatus
-      phase: Enum_ProjectPhase
-      leader: String
-      objectives: [createObjective]
+    editProject(_id: String!, fields: projectFields!): Project
+
+    deleteProject(_id: String!): Project
+
+    createObjective(projectID: String!, fields: objectiveFields!): Project
+
+    editObjective(
+      projectID: String!
+      objectiveIndex: Int!
+      fields: objectiveFields
     ): Project
 
-    deleteProject(
-      _id: String!
-    ): Project
+    deleteObjective(projectID: String!, objectiveID: String!): Project
   }
 `;
 

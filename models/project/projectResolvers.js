@@ -75,14 +75,7 @@ const projectResolvers = {
       const projectEdited = await projectModel.findByIdAndUpdate(
         args._id,
         {
-          projectName: args.projectName,
-          budget: args.budget,
-          startDate: args.startDate,
-          endDate: args.endDate,
-          status: args.status,
-          phase: args.phase,
-          leader: args.leader,
-          objectives: args.objectives,
+          ...args.fields,
         },
         { new: true }
       );
@@ -93,6 +86,47 @@ const projectResolvers = {
         _id: args._id,
       });
       return projectDeleted;
+    },
+    createObjective: async (parent, args) => {
+      const objectiveCreated = await projectModel.findByIdAndUpdate(
+        args.projectID,
+        {
+          $addToSet: {
+            objectives: { ...args.fields },
+          },
+        },
+        { new: true }
+      );
+      return objectiveCreated;
+    },
+    editObjective: async (parent, args) => {
+      const objectiveEdited = await projectModel.findByIdAndUpdate(
+        args.projectID,
+        {
+          $set: {
+            [`objectives.${args.objectiveIndex}.objectiveDescription`]:
+              args.fields.objectiveDescription,
+            [`objectives.${args.objectiveIndex}.objectiveType`]:
+              args.fields.objectiveType,
+          },
+        },
+        { new: true }
+      );
+      return objectiveEdited;
+    },
+    deleteObjective: async (parent, args) => {
+      const objectiveDeleted = await projectModel.findByIdAndUpdate(
+        args.projectID,
+        {
+          $pull: {
+            objectives: {
+              _id: args.objectiveID,
+            },
+          },
+        },
+        { new: true }
+      );
+      return objectiveDeleted;
     },
   },
 };
