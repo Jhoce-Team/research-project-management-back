@@ -1,5 +1,4 @@
 import { projectModel } from "./project.js";
-
 const projectResolvers = {
   Query: {
     findAllProjects: async (parent, args) => {
@@ -61,7 +60,8 @@ const projectResolvers = {
     createProject: async (parent, args) => {
       const projectCreated = await projectModel.create({
         projectName: args.projectName,
-        projectDescription: args.projectDescription,  
+        projectDescription: args.projectDescription,
+        projectShortDescription: args.projectShortDescription,
         budget: args.budget,
         startDate: args.startDate,
         endDate: args.endDate,

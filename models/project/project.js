@@ -13,6 +13,11 @@ const projectSchema = new Schema(
       type: String,
       required: true,
     },
+    projectShortDescription: {
+      type: String,
+      required: true,
+      maxlength: 150,
+    },
     budget: {
       type: Number,
       required: true,

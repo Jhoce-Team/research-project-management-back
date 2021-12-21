@@ -15,6 +15,7 @@ const projectTypes = gql`
   input projectFields {
     projectName: String
     projectDescription: String
+    projectShortDescription: String
     budget: Float
     startDate: Date
     endDate: Date
@@ -27,6 +28,7 @@ const projectTypes = gql`
     _id: ID!
     projectName: String!
     projectDescription: String!
+    projectShortDescription: String!
     budget: Float!
     startDate: Date!
     endDate: Date!
@@ -47,6 +49,7 @@ const projectTypes = gql`
     createProject(
       projectName: String!
       projectDescription: String!
+      projectShortDescription: String!
       budget: Float!
       startDate: Date!
       endDate: Date!
