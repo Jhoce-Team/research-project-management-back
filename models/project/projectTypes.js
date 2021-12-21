@@ -14,6 +14,7 @@ const projectTypes = gql`
 
   input projectFields {
     projectName: String
+    projectDescription: String
     budget: Float
     startDate: Date
     endDate: Date
@@ -25,6 +26,7 @@ const projectTypes = gql`
   type Project {
     _id: ID!
     projectName: String!
+    projectDescription: String!
     budget: Float!
     startDate: Date!
     endDate: Date!
@@ -44,6 +46,7 @@ const projectTypes = gql`
   type Mutation {
     createProject(
       projectName: String!
+      projectDescription: String!
       budget: Float!
       startDate: Date!
       endDate: Date!

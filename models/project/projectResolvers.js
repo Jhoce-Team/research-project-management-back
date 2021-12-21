@@ -61,6 +61,7 @@ const projectResolvers = {
     createProject: async (parent, args) => {
       const projectCreated = await projectModel.create({
         projectName: args.projectName,
+        projectDescription: args.projectDescription,  
         budget: args.budget,
         startDate: args.startDate,
         endDate: args.endDate,
